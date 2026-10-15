@@ -46,6 +46,10 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name == 'push' }}
+          # Preserve package-to-repository association after an organization transfer.
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.description=Ladica Sync backend
           tags: |
             ghcr.io/${{ github.repository_owner }}/linker-be:main
             ghcr.io/${{ github.repository_owner }}/linker-be:${{ github.sha }}
