@@ -1,7 +1,8 @@
 services:
   ladica-sync-backend:
     container_name: ladica-sync-backend
-    image: ghcr.io/karlohrvacic/linker-be:main
+    # Override only after verifying the new organization-owned GHCR image.
+    image: ${LADICA_BACKEND_IMAGE:-ghcr.io/karlohrvacic/linker-be:main}
     restart: unless-stopped
     ports:
       - "8086:8080"
