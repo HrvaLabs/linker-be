@@ -2,7 +2,7 @@
 
 Backend for [Ladica](https://ladica.hrva.cc/), a local-first bookmark manager maintained by [HrvaLabs](https://hrvalabs.net/).
 
-The frontend lives in [HrvaLabs/linker-fe](https://github.com/HrvaLabs/linker-fe). This repository contains the Spring Boot backend, its database migrations, Docker configuration and a GitHub Actions image-publishing workflow.
+The frontend lives in [HrvaLabs/linker-fe](https://github.com/HrvaLabs/linker-fe). The backend source is [HrvaLabs/linker-be](https://github.com/HrvaLabs/linker-be). This repository contains the Spring Boot backend, its database migrations, Docker configuration and a GitHub Actions image-publishing workflow.
 
 ## Development
 
@@ -19,11 +19,11 @@ For local supporting services, see `docker/docker-compose.yml`. Do not commit co
 On pushes to `main`, GitHub Actions builds the backend and publishes multi-platform images to GitHub Container Registry (GHCR):
 
 ```text
-ghcr.io/<github-repository-owner>/linker-be:main
-ghcr.io/<github-repository-owner>/linker-be:<commit-sha>
+ghcr.io/hrvalabs/linker-be:main
+ghcr.io/hrvalabs/linker-be:<commit-sha>
 ```
 
-The workflow includes an OCI `org.opencontainers.image.source` label based on `github.repository`, so the package is associated with whichever repository owns the source when published.
+The workflow lowercases the GitHub owner when forming a GHCR image tag and includes an OCI `org.opencontainers.image.source` label pointing at `HrvaLabs/linker-be`. This makes the container reference valid and associates the image with its source repository.
 
 New GHCR packages may initially be **private**, even when the repository is public. Verify package visibility or configure read authentication explicitly before attempting to pull an image on a server.
 
