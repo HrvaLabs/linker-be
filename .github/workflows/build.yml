@@ -8,6 +8,11 @@ on:
     branches:
       - main
 
+# A newer push supersedes an older publish to the mutable :main image tag.
+concurrency:
+  group: linker-be-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -41,6 +46,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Normalize GHCR namespace
+        run: echo "IMAGE_NAMESPACE=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
+
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
@@ -51,6 +59,6 @@ jobs:
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.description=Ladica Sync backend
           tags: |
-            ghcr.io/${{ github.repository_owner }}/linker-be:main
-            ghcr.io/${{ github.repository_owner }}/linker-be:${{ github.sha }}
+            ghcr.io/${{ env.IMAGE_NAMESPACE }}/linker-be:main
+            ghcr.io/${{ env.IMAGE_NAMESPACE }}/linker-be:${{ github.sha }}
           platforms: linux/amd64,linux/arm64
