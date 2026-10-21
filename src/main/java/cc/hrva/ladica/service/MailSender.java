@@ -36,11 +36,11 @@ public class MailSender {
         context.setVariable("title", english ? "Sign in to Ladica" : "Prijava u Ladicu");
         context.setVariable("intro", english
                 ? "Tap the button below to sign in. The link works once and expires shortly."
-                : "Za prijavu dodirni gumb ispod. Poveznica se može iskoristiti samo jednom i ubrzo istječe.");
+                : "Za prijavu dodirni gumb ispod. Link se može iskoristiti samo jednom i ubrzo istječe.");
         context.setVariable("buttonLabel", english ? "Sign in" : "Prijavi se");
         context.setVariable("fallback", english
                 ? "If the button doesn't work, copy this link into your browser:"
-                : "Ako gumb ne radi, kopiraj ovu poveznicu i zalijepi je u preglednik:");
+                : "Ako gumb ne radi, kopiraj ovaj link i zalijepi ga u preglednik:");
         context.setVariable("ignore", english
                 ? "If you didn't request this email, you can safely ignore it."
                 : "Ako zahtjev za prijavu nije od tebe, slobodno zanemari ovu poruku.");
@@ -48,7 +48,7 @@ public class MailSender {
                 ? "Ladica · save links, open with one tap"
                 : "Ladica · spremi linkove i otvori ih jednim dodirom");
 
-        final var subject = english ? "Your Ladica sign-in link" : "Poveznica za prijavu u Ladicu";
+        final var subject = english ? "Your Ladica sign-in link" : "Link za prijavu u Ladicu";
         final var htmlBody = templateEngine.process(MAGIC_LINK_TEMPLATE, context);
 
         sendHtmlEmail(recipient, subject, htmlBody);
