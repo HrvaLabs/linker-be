@@ -6,5 +6,5 @@ import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
-public record PushRequest(@Valid @NotNull @Size(max = 1000) List<LinkDto> links) {
+public record PushRequest(@NotNull @Size(max = 1000) List<@Valid LinkDto> links) {
 }
